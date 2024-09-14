@@ -1,34 +1,41 @@
 return {
 	{
-		items = {
-			{
-				name = 'lockpick',
-				ingredients = {
-					scrapmetal = 5,
-					WEAPON_HAMMER = 0.05
-				},
-				duration = 5000,
-				count = 2,
-			},
-		},
-		points = {
-			vec3(-1147.083008, -2002.662109, 13.180260),
-			vec3(-345.374969, -130.687088, 39.009613)
-		},
+		items = { { name = 'cocaine_bag', ingredients = { coke_pure = 1, empty_bag = 1 }, duration = 2000, count = 1 } },
+		points = { vec3(1443.25, 6331.35, 23.65), },
 		zones = {
 			{
-				coords = vec3(-1146.2, -2002.05, 13.2),
-				size = vec3(3.8, 1.05, 0.15),
-				distance = 1.5,
-				rotation = 315.0,
-			},
-			{
-				coords = vec3(-346.1, -130.45, 39.0),
-				size = vec3(3.8, 1.05, 0.15),
-				distance = 1.5,
-				rotation = 70.0,
+				coords = vec3(1443.25, 6331.35, 23.65),
+				size = vec3(2.3, 0.85, 0.75),
+				rotation = 3.5,
+				distance = 2.0
 			},
 		},
-		blip = { id = 566, colour = 31, scale = 0.8 },
+	},
+
+	{
+		items = { { name = 'keef', ingredients = { wetcannabis = 2 }, duration = 2000, count = 4 } },
+		points = { vec3(1394.85, 3601.1, 38.5) },
+		zones = {
+			{
+				coords = vec3(1394.85, 3601.1, 38.5),
+				size = vec3(2.0, 0.9, 1.05),
+				rotation = 19.5,
+				distance = 2.0
+			},
+		},
+	},
+
+	{
+		items = { { name = 'weed_muffin', ingredients = { keef = 4, money = 10 }, duration = 3000, count = 2 } },
+		points = { vec3(2192.60, 5595.63, 53.44) },
+		zones = {
+			{
+				coords = vec3(2192.60, 5595.63, 53.54),
+				size = vec3(0.5, 0.85, 1.9),
+				rotation = 0.0,
+				distance = 1.5
+			},
+		},
+		--blip = { id = 566, colour = 31, scale = 0.8 },
 	},
 }

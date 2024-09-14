@@ -1,39 +1,56 @@
 return {
 	{
-		coords = vec3(452.3, -991.4, 30.7),
+		coords = vec3(935.25, -1044.25, 40.5),
 		target = {
-			loc = vec3(451.25, -994.28, 30.69),
-			length = 1.2,
-			width = 5.6,
-			heading = 0,
-			minZ = 29.49,
-			maxZ = 32.09,
-			label = 'Open personal locker'
+			coords = vec3(935.25, -1044.25, 40.5),
+			size = vec3(0.75, 3.75, 1.0),
+			rotation = 0.0,
+			label = 'Open Stash'
 		},
-		name = 'policelocker',
-		label = 'Personal locker',
-		owner = true,
-		slots = 70,
-		weight = 70000,
-		groups = shared.police
+		name = 'stash_mechanic',
+		label = 'Benny\'s Stash',
+		owner = false,
+		slots = 200,
+		weight = 500000,
+		groups = { ['mechanic'] = 3 }
 	},
 
-	{
-		coords = vec3(301.3, -600.23, 43.28),
-		target = {
-			loc = vec3(301.82, -600.99, 43.29),
-			length = 0.6,
-			width = 1.8,
-			heading = 340,
-			minZ = 43.34,
-			maxZ = 44.74,
-			label = 'Open personal locker'
-		},
-		name = 'emslocker',
-		label = 'Personal Locker',
-		owner = true,
-		slots = 70,
-		weight = 70000,
-		groups = {['ambulance'] = 0}
-	},
+	-- {
+	-- 	coords = vec3(-630.9, -89.8, 44.75),
+	-- 	target = {
+	-- 		loc = vec3(-630.9, -89.8, 44.75),
+	-- 		length = 2,
+	-- 		width = 0.3,
+	-- 		heading = 340,
+	-- 		minZ = 44.55,
+	-- 		maxZ = 43.55,
+	-- 		label = 'LSFD personal locker'
+	-- 	},
+	-- 	name = 'lsfdlocker',
+	-- 	label = 'LSFD Personal Locker',
+	-- 	owner = true,
+	-- 	slots = 10,
+	-- 	weight = 50000,
+	-- 	groups = {['firefighter'] = 0}
+	-- },
+
+	-- {
+	-- 	coords = vec3(351.8, 274.75, 93.8),
+	-- 	target = {
+	-- 		loc = vec3(351.8, 274.75, 93.8),
+	-- 		length = 1.7,
+	-- 		width = 1,
+	-- 		heading = 344.0,
+	-- 		minZ = 93.8,
+	-- 		maxZ = 94.8,
+	-- 		label = 'Galaxy locker'
+	-- 	},
+	-- 	name = 'galaxy',
+	-- 	label = 'Galaxy locker',
+	-- 	owner = false,
+	-- 	slots = 70,
+	-- 	weight = 1000000,
+	-- 	groups = {['galaxy'] = 0}
+	-- },
+
 }
