@@ -51,16 +51,22 @@ local function setContainerProperties(itemName, properties)
 	}
 end
 
-setContainerProperties('paperbag', {
-	slots = 5,
-	maxWeight = 1000,
-	blacklist = { 'testburger' }
+setContainerProperties('wallet', {
+	slots = 7,
+	maxWeight = 800,
+	whitelist = { 'id_card', 'driver_license', 'weaponlicense', 'health_insurance', 'insurance', 'car_registration', 'home_insurance'}
 })
 
-setContainerProperties('pizzabox', {
+setContainerProperties('backpack', {
+	slots = 50,
+	maxWeight = 50000,
+	blacklist = { 'money' } -- Add blacklisted items
+})
+
+setContainerProperties('restaurant_box', {
 	slots = 5,
 	maxWeight = 1000,
-	whitelist = { 'pizza' }
+	whitelist = { 'restaurant_food' } -- Add blacklisted items
 })
 
 return containers

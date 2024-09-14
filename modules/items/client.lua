@@ -88,6 +88,8 @@ local ox_inventory = exports[shared.resource]
 -- Clientside item use functions
 -----------------------------------------------------------------------------------------------
 
+
+
 Item('bandage', function(data, slot)
 	local maxHealth = GetEntityMaxHealth(cache.ped)
 	local health = GetEntityHealth(cache.ped)
@@ -99,12 +101,45 @@ Item('bandage', function(data, slot)
 	end)
 end)
 
-Item('armour', function(data, slot)
+Item('lightarmor', function(data, slot)
+    if GetPedArmour(cache.ped) <= 25 then
+        ox_inventory:useItem(data, function(data)
+            if data then
+                SetPlayerMaxArmour(PlayerData.id, 25)
+                SetPedArmour(cache.ped, 25)
+            end
+        end)
+    end
+end)
+
+Item('armor', function(data, slot)
+    if GetPedArmour(cache.ped) <= 50 then
+        ox_inventory:useItem(data, function(data)
+            if data then
+                SetPlayerMaxArmour(PlayerData.id, 50)
+                SetPedArmour(cache.ped, 50)
+            end
+        end)
+    end
+end)
+
+Item('heavyarmor', function(data, slot)
+    if GetPedArmour(cache.ped) <= 75 then
+        ox_inventory:useItem(data, function(data)
+            if data then
+                SetPlayerMaxArmour(PlayerData.id, 75)
+                SetPedArmour(cache.ped, 75)
+            end
+        end)
+    end
+end)
+
+Item('armorplate', function(data, slot)
 	if GetPedArmour(cache.ped) < 100 then
 		ox_inventory:useItem(data, function(data)
 			if data then
-				SetPlayerMaxArmour(PlayerData.id, 100)
-				SetPedArmour(cache.ped, 100)
+                local getPedArmor = GetPedArmour(cache.ped)
+               getPedArmor = getPedArmor + 10 AddArmourToPed(cache.ped, getPedArmor )
 			end
 		end)
 	end
@@ -129,63 +164,85 @@ Item('parachute', function(data, slot)
 	end
 end)
 
-Item('phone', function(data, slot)
-	local success, result = pcall(function()
-		return exports.npwd:isPhoneVisible()
-	end)
-
-	if success then
-		exports.npwd:setPhoneVisible(not result)
-	end
+Item('powerbank', function(data, slot)
+    ox_inventory:useItem(data, function(data)
+        if data then
+            if not exports["lb-phone"]:IsCharging() or exports["lb-phone"]:IsPhoneDead() then
+                exports["lb-phone"]:ToggleCharging(true)
+                BatteryLoop()
+                lib.notify({
+                    title = 'PHONE CHARGER',
+                    description = 'Charging phone',
+                    position = 'top',
+                    style = {
+                        backgroundColor = '#141517',
+                        color = '#909296'
+                    },
+                    icon = 'fa-solid fa-mobile-screen',
+                    iconColor = '#4ce074'
+                })
+            elseif exports["lb-phone"]:IsCharging() then
+                lib.notify({
+                    title = 'PHONE CHARGER',
+                    description = 'Phone Already Charging',
+                    position = 'top',
+                    style = {
+                        backgroundColor = '#141517',
+                        color = '#909296'
+                    },
+                    icon = 'fa-solid fa-mobile-screen',
+                    iconColor = 'red'
+                })
+            elseif exports["lb-phone"]:GetBattery() >= 90 then
+                lib.notify({
+                    title = 'PHONE CHARGER',
+                    description = 'Phone does not need charge yet.',
+                    position = 'top',
+                    style = {
+                        backgroundColor = '#141517',
+                        color = '#909296'
+                    },
+                    icon = 'fa-solid fa-mobile-screen',
+                    iconColor = 'red'
+                })
+            end
+        end
+    end)
 end)
 
-Item('clothing', function(data, slot)
-	local metadata = slot.metadata
+function BatteryLoop()
+    if not looped then
+        looped = true
+        CreateThread(function()
+            while true do
+                local myPhoneBattery = exports["lb-phone"]:GetBattery()
+                Wait(10)
+                if myPhoneBattery <= 99 then
+                Wait(1000 * 10)
+                myPhoneBattery +=1
+                exports["lb-phone"]:SetBattery(myPhoneBattery)
+                elseif myPhoneBattery >= 99 then
+                    exports["lb-phone"]:ToggleCharging(false)
+                    lib.notify({
+                        title = 'PHONE CHARGER',
+                        description = 'Charged',
+                        position = 'top',
+                        style = {
+                            backgroundColor = '#141517',
+                            color = '#909296'
+                        },
+                        icon = 'fa-solid fa-mobile-screen',
+                        iconColor = '#4ce074'
+                    })
+                    looped = false
+                    break
+                end
+            end
+        end)
+    end
+end
 
-	if not metadata.drawable then return print('Clothing is missing drawable in metadata') end
-	if not metadata.texture then return print('Clothing is missing texture in metadata') end
-
-	if metadata.prop then
-		if not SetPedPreloadPropData(cache.ped, metadata.prop, metadata.drawable, metadata.texture) then
-			return print('Clothing has invalid prop for this ped')
-		end
-	elseif metadata.component then
-		if not IsPedComponentVariationValid(cache.ped, metadata.component, metadata.drawable, metadata.texture) then
-			return print('Clothing has invalid component for this ped')
-		end
-	else
-		return print('Clothing is missing prop/component id in metadata')
-	end
-
-	ox_inventory:useItem(data, function(data)
-		if data then
-			metadata = data.metadata
-
-			if metadata.prop then
-				local prop = GetPedPropIndex(cache.ped, metadata.prop)
-				local texture = GetPedPropTextureIndex(cache.ped, metadata.prop)
-
-				if metadata.drawable == prop and metadata.texture == texture then
-					return ClearPedProp(cache.ped, metadata.prop)
-				end
-
-				-- { prop = 0, drawable = 2, texture = 1 } = grey beanie
-				SetPedPropIndex(cache.ped, metadata.prop, metadata.drawable, metadata.texture, false);
-			elseif metadata.component then
-				local drawable = GetPedDrawableVariation(cache.ped, metadata.component)
-				local texture = GetPedTextureVariation(cache.ped, metadata.component)
-
-				if metadata.drawable == drawable and metadata.texture == texture then
-					return -- item matches (setup defaults so we can strip?)
-				end
-
-				-- { component = 4, drawable = 4, texture = 1 } = jeans w/ belt
-				SetPedComponentVariation(cache.ped, metadata.component, metadata.drawable, metadata.texture, 0);
-			end
-		end
-	end)
-end)
-
+-----------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------
 
 exports('Items', function(item) return getItem(nil, item) end)

@@ -68,14 +68,22 @@ end
 ---@param ped number
 ---@return boolean
 local function canOpenTarget(ped)
+    local player = NetworkGetPlayerIndexFromPed(ped)
+    local playerID = GetPlayerServerId(player)
 	return IsPedFatallyInjured(ped)
+    or Player(playerID).state.dead
 	or IsEntityPlayingAnim(ped, 'dead', 'dead_a', 3)
 	or IsPedCuffed(ped)
 	or IsEntityPlayingAnim(ped, 'mp_arresting', 'idle', 3)
 	or IsEntityPlayingAnim(ped, 'missminuteman_1ig_2', 'handsup_base', 3)
 	or IsEntityPlayingAnim(ped, 'missminuteman_1ig_2', 'handsup_enter', 3)
 	or IsEntityPlayingAnim(ped, 'random@mugging3', 'handsup_standing_base', 3)
+    or IsEntityPlayingAnim(ped, 'mini@cpr@char_b@cpr_def', 'cpr_pumpchest_idle', 3)
+    or IsEntityPlayingAnim(ped, 'cpr_pumpchest_idle', 'cpr_pumpchest_idle', 3)
+    or IsEntityPlayingAnim(ped, 'combat@damage@writhe', 'writhe_loop', 3)
+    or IsEntityPlayingAnim(ped, 'veh@bus@passenger@common@idle_duck', 'sit', 3)
 end
+
 
 local defaultInventory = {
 	type = 'newdrop',
@@ -194,11 +202,9 @@ function client.openInventory(inv, data)
             return lib.notify({ id = 'cannot_perform', type = 'error', description = locale('cannot_perform') })
         end
 
-        left, right, accessError = lib.callback.await('ox_inventory:openCraftingBench', 200, data.id, data.index)
+        left, right = lib.callback.await('ox_inventory:openCraftingBench', 200, data.id, data.index)
 
-        if left then
-            right = CraftingBenches[data.id]
-
+        if left and right then
             if not right?.items then return end
 
             local coords, distance
@@ -207,8 +213,8 @@ function client.openInventory(inv, data)
                 coords = GetEntityCoords(cache.ped)
                 distance = 2
             else
-                coords = shared.target and right.zones and right.zones[data.index].coords or right.points and right.points[data.index]
-                distance = coords and shared.target and right.zones[data.index].distance or 2
+                coords = shared.target == 'ox_target' and right.zones and right.zones[data.index].coords or right.points and right.points[data.index]
+                distance = coords and shared.target == 'ox_target' and right.zones[data.index].distance or 2
             end
 
             right = {
@@ -1020,7 +1026,7 @@ end)
 local function nearbyDrop(point)
 	if not point.instance or point.instance == currentInstance then
 		---@diagnostic disable-next-line: param-type-mismatch
-		DrawMarker(2, point.coords.x, point.coords.y, point.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 150, 30, 30, 222, false, false, 0, true, false, false, false)
+		DrawMarker(20,  point.coords.x, point.coords.y, point.coords.z - 0.9 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.1, 32, 201, 151, 255, false, false, 0, false, false, false, false)
 	end
 end
 
@@ -1275,7 +1281,7 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 	---@param point CPoint
 	local function nearbyLicense(point)
 		---@diagnostic disable-next-line: param-type-mismatch
-		DrawMarker(2, point.coords.x, point.coords.y, point.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 30, 150, 30, 222, false, false, 0, true, false, false, false)
+		DrawMarker(20, point.coords.x, point.coords.y, point.coords.z - 0.60 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.15, 32, 201, 151, 222, false, false, 0, true, false, false, false)
 
 		if point.isClosest and point.currentDistance < 1.2 then
 			if not hasTextUi then
@@ -1755,9 +1761,7 @@ RegisterNUICallback('exit', function(_, cb)
 	cb(1)
 end)
 
-lib.callback.register('ox_inventory:startCrafting', function(id, recipe)
-	recipe = CraftingBenches[id].items[recipe]
-
+lib.callback.register('ox_inventory:startCrafting', function(recipe)
 	return lib.progressCircle({
 		label = locale('crafting_item', recipe.metadata?.label or Items[recipe.name].label),
 		duration = recipe.duration or 3000,
@@ -1767,9 +1771,10 @@ lib.callback.register('ox_inventory:startCrafting', function(id, recipe)
 			combat = true,
 		},
 		anim = {
-			dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
-			clip = 'machinic_loop_mechandplayer',
-		}
+			dict = recipe.anim?.dict or 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+			clip = recipe.anim?.clip or 'machinic_loop_mechandplayer',
+		},
+		prop = recipe.prop or {}
 	})
 end)
 
