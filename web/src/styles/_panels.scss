@@ -51,6 +51,18 @@
   gap: var(--ox-gap-panel);
   height: 100%;
   width: 100%;
+  perspective: 1000px;
+  perspective-origin: center center;
+}
+
+.inventory-side.left {
+  transform: rotateY(var(--ox-panel-tilt-left, 0deg));
+  transform-origin: right center;
+}
+
+.inventory-side.right {
+  transform: rotateY(var(--ox-panel-tilt-right, 0deg));
+  transform-origin: left center;
 }
 
 .inventory-side {

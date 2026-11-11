@@ -33,28 +33,6 @@ export const THEME_PRESETS: Readonly<Record<string, ThemeColors>> = {
     textShadow: 'rgba(192, 224, 15, 0.36)',
     photoShadowColor: 'rgba(192, 224, 15, 0.30)',
   },
-  orange: {
-    backgroundColor1: 'rgba(83, 55, 24, 0)',
-    backgroundColor2: 'rgba(80, 46, 18, 0.05)',
-    backgroundColor3: 'rgba(134, 68, 24, 0.1)',
-    rgbColor1: 'rgba(224, 109, 15, 0.1)',
-    rgbColor2: 'rgba(224, 92, 15, 0.05)',
-    mainColor: '#e04a0fff',
-    secondaryColor: '#7a3608ff',
-    textShadow: 'rgba(224, 109, 15, 0.36)',
-    photoShadowColor: 'rgba(224, 116, 15, 0.3)',
-  },
-  red: {
-    backgroundColor1: 'rgba(83, 24, 24, 0)',
-    backgroundColor2: 'rgba(80, 18, 18, 0.05)',
-    backgroundColor3: 'rgba(134, 24, 24, 0.1)',
-    rgbColor1: 'rgba(224, 15, 15, 0.1)',
-    rgbColor2: 'rgba(224, 15, 15, 0.05)',
-    mainColor: '#e00f2bff',
-    secondaryColor: '#7a0808ff',
-    textShadow: 'rgba(224, 15, 15, 0.36)',
-    photoShadowColor: 'rgba(224, 15, 15, 0.3)',
-  },
   purple: {
     backgroundColor1: 'rgba(61, 24, 83, 0)',
     backgroundColor2: 'rgba(42, 18, 80, 0.05)',
@@ -88,9 +66,27 @@ export const THEME_PRESETS: Readonly<Record<string, ThemeColors>> = {
     textShadow: 'rgba(15, 224, 25, 0.36)',
     photoShadowColor: 'rgba(15, 224, 43, 0.3)',
   },
+  streetrp: {
+    backgroundColor1: 'rgba(11, 13, 15, 0)',
+    backgroundColor2: 'rgba(23, 27, 31, 0.05)',
+    backgroundColor3: 'rgba(142, 150, 158, 0.1)',
+    rgbColor1: 'rgba(242, 240, 233, 0.1)',
+    rgbColor2: 'rgba(255, 90, 31, 0.05)',
+    mainColor: '#FF5A1F',
+    secondaryColor: '#8E969E',
+    textShadow: 'rgba(255, 90, 31, 0.36)',
+    photoShadowColor: 'rgba(255, 90, 31, 0.3)',
+  },
 };
 
-export const THEME_PRESET_NAMES: readonly string[] = ['white', 'yellow', 'orange', 'red', 'purple', 'blue', 'green'];
+export const THEME_PRESET_NAMES: readonly string[] = [
+  'white',
+  'yellow',
+  'purple',
+  'blue',
+  'green',
+  'streetrp',
+];
 
 export const CUSTOM_THEME_NAME = 'custom';
 

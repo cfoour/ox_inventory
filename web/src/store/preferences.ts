@@ -12,6 +12,7 @@ export type PrefValue = boolean | number | string | readonly string[];
 
 export type PrefKey =
   | 'uiScale'
+  | 'perspectiveTilt'
   | 'backgroundDim'
   | 'reduceMotion'
   | 'slotSize'
@@ -137,6 +138,22 @@ export interface StringArrayPrefDef extends PrefDefBase {
 export type PrefDef = BooleanPrefDef | NumberPrefDef | EnumPrefDef | StringArrayPrefDef;
 
 export const PREFERENCES: readonly PrefDef[] = [
+  {
+    key: 'perspectiveTilt',
+    kind: 'number',
+    group: 'display',
+    label: '3D perspective tilt',
+    description: 'Tilt the left and right inventory panels toward each other.',
+    default: 0,
+    min: 0,
+    max: 16,
+    step: 1,
+    unit: '°',
+    apply: (value: number) => {
+      setRootFactor('--ox-panel-tilt-left', value === 0 ? null : `${value}deg`);
+      setRootFactor('--ox-panel-tilt-right', value === 0 ? null : `${-value}deg`);
+    },
+  },
   {
     key: 'uiScale',
     kind: 'number',

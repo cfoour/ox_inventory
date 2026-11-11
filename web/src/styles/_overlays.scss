@@ -134,7 +134,7 @@
   outline: none;
   border: var(--ox-hairline) solid var(--ox-stroke-10);
   border-radius: var(--ox-radius-md);
-  background: var(--ox-sheen);
+  background: var(--ox-sheen), var(--ox-bg-2);
   color: var(--ox-text-2);
   text-align: center;
   font-family: var(--ox-font);
@@ -152,7 +152,9 @@
   }
 
   &:hover {
-    border-color: var(--ox-stroke-20);
+    border-color: var(--ox-main);
+    background: var(--ox-bg-3);
+    color: var(--ox-text-1);
     opacity: 1;
     cursor: pointer;
   }
