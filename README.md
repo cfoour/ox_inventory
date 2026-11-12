@@ -14,9 +14,9 @@ Everything from upstream ox_inventory still works: items, weapons, shops, stashe
 
 ![Framework](https://img.shields.io/badge/Framework-QBox%20%7C%20QBCore%20%7C%20ESX%20%7C%20ox__core%20%7C%20ND-3b82f6)
 ![Layout](https://img.shields.io/badge/Layout-slots%20or%20grid-3b82f6)
-![Upstream](https://img.shields.io/badge/Upstream-CommunityOx%2Fox__inventory-3b82f6)
+![Upstream](https://img.shields.io/badge/Upstream-overextended%2Fox__inventory-3b82f6)
 
-[**Store**](https://fivem.samueldev.shop) · [**Discord**](https://discord.gg/FzPehMQaBQ) · [**Upstream docs**](https://coxdocs.dev/ox_inventory)
+[**Store**](https://fivem.samueldev.shop) · [**Discord**](https://discord.gg/FzPehMQaBQ) · [**Upstream docs**](https://overextended.dev/docs/ox_inventory)
 
 </div>
 
@@ -366,12 +366,12 @@ The two duty belts work differently to everything else in that table. They hold 
 
 | Resource | What it is for |
 | --- | --- |
-| [ox_lib](https://github.com/CommunityOx/ox_lib) | Shared library |
-| [oxmysql](https://github.com/CommunityOx/oxmysql) | Database access |
+| [ox_lib](https://github.com/overextended/ox_lib) | Shared library |
+| [oxmysql](https://github.com/overextended/oxmysql) | Database access |
 
 ### Supported frameworks
 
-[ox_core](https://github.com/communityox/ox_core), [esx](https://github.com/esx-framework/esx_core), [qbox](https://github.com/Qbox-project/qbx_core), [nd_core](https://github.com/ND-Framework/ND_Core), and QBCore. Compatibility with third-party resources is not guaranteed.
+[ox_core](https://github.com/overextended/ox_core), [esx](https://github.com/esx-framework/esx_core), [qbox](https://github.com/Qbox-project/qbx_core), [nd_core](https://github.com/ND-Framework/ND_Core), and QBCore. Compatibility with third-party resources is not guaranteed.
 
 ### Steps
 
@@ -403,7 +403,7 @@ npm run build
 
 ## Staying current with upstream
 
-This fork follows [CommunityOx/ox_inventory](https://github.com/CommunityOx/ox_inventory) and is currently level with it.
+This fork follows [CommunityOx/ox_inventory](https://github.com/overextended/ox_inventory) and is currently level with it.
 
 > [!IMPORTANT]
 > **`git merge upstream/main` does not work here, and never will.** This repository was started fresh rather than forked on GitHub, so it shares no commit history with upstream. Git has no common ancestor to merge from and will refuse outright. Upstream changes have to be ported by hand.
@@ -423,7 +423,7 @@ Then read the commits you care about and apply the changes yourself. Most upstre
 ## Credits
 
 - **[Overextended](https://github.com/overextended)** wrote the original ox_inventory, and this is still their resource underneath.
-- **[CommunityOx](https://github.com/CommunityOx/ox_inventory)** maintain it now, and are the upstream this fork tracks.
+- **[CommunityOx](https://github.com/overextended/ox_inventory)** maintain it now, and are the upstream this fork tracks.
 - **[DemiAutomatic/ox_inv_redesign](https://github.com/DemiAutomatic/ox_inv_redesign)** is the redesign this interface grew out of.
 - Bag and container icons come from **[swkeep/keep-bags](https://github.com/swkeep/keep-bags)**, used unmodified under GPL-3.0. See [`web/images/CREDITS.md`](web/images/CREDITS.md) for the per-file mapping.
 
